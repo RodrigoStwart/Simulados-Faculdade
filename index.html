@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simulados - Single Page</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- SheetJS for XLSX reading -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- html2pdf for client-side PDF export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="header">
+      <h1>Gerador de Simulados</h1>
+      <div class="toggles">
+        <label class="switch" title="Modo escuro">
+          <input id="darkToggle" type="checkbox" aria-label="Alternar modo escuro">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <section class="controls" aria-label="Configurações do simulado">
+        <div class="row">
+          <label for="fileInput">Planilha (fallback):</label>
+          <input id="fileInput" type="file" accept=".xlsx" aria-label="Escolher planilha XLSX">
+        </div>
+
+        <div class="row">
+          <label for="subjectSelect">Matéria</label>
+          <select id="subjectSelect" aria-label="Selecionar matéria">
+            <option value="">Carregando matérias...</option>
+          </select>
+        </div>
+
+        <div class="row small">
+          <label for="numQ">Número de questões</label>
+          <input id="numQ" type="number" min="1" value="10" aria-label="Número de questões">
+          <label><input id="shuffleChoices" type="checkbox"> Embaralhar alternativas</label>
+        </div>
+
+        <div class="row small">
+          <label><input id="enableTimer" type="checkbox"> Ativar temporizador</label>
+          <label for="timePerQ">seg/questão</label>
+          <input id="timePerQ" type="number" min="5" value="30">
+        </div>
+
+        <div class="row actions">
+          <button id="startBtn">Iniciar</button>
+          <button id="exportCsvBtn" disabled>Exportar CSV</button>
+          <button id="exportPdfBtn" disabled>Exportar PDF</button>
+        </div>
+
+        <div class="row">
+          <label for="progressBar">Barra de progresso</label>
+          <progress id="progressBar" value="0" max="10" aria-label="Barra de progresso"></progress>
+        </div>
+      </section>
+
+      <section id="quizArea" class="quiz" aria-live="polite"></section>
+
+      <section id="resultArea" class="result" hidden aria-live="polite"></section>
+
+      <section id="historyArea" class="history" aria-label="Histórico de simulados">
+        <h2>Histórico</h2>
+        <div id="historyList">Carregando histórico...</div>
+      </section>
+    </main>
+
+    <footer>
+      <small>Coloque <strong>Simulados Faculdade.xlsx</strong> na mesma pasta do index.html e rode um servidor (ex.: <code>python -m http.server</code>).</small>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
